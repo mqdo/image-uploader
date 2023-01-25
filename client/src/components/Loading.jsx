@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Loading = () => {
+const Loading = ({ handleSearchImage }) => {
+  useEffect(() => handleSearchImage, [])
+
   return (
     <div className='w-full sm:w-[400px] h-[150px] px-8 py-10 bg-white flex flex-col justify-between items-start rounded-xl shadow-lg'>
       <h1 className=' text-lg leading-3'>Uploading...</h1>

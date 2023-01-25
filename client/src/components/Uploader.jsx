@@ -5,16 +5,20 @@ import placeholder from '../assets/image.svg';
 const Uploader = ({ setImage }) => {
   const [dragEnter, setDragEnter] = useState(false);
 
-  const handleUpload = (e) => {
-    setImage(e.target.files[0]);
-  }
-
   const handleDragEnter = () => {
     setDragEnter(true);
   };
 
+  const handleDragLeave = () => {
+    setDragEnter(false);
+  };
+
   const allowDrop = (e) => {
     e.preventDefault();
+  };
+
+  const handleUpload = (e) => {
+    setImage(e.target.files[0]);
   }
 
   const handleDrop = (e) => {
@@ -23,6 +27,7 @@ const Uploader = ({ setImage }) => {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setImage(e.dataTransfer.files[0]);
     }
+    setDragEnter(false);
   };
 
   return (
@@ -32,6 +37,7 @@ const Uploader = ({ setImage }) => {
       <div
         className={`w-full h-[50%] ${dragEnter ? 'bg-blue-200' : 'bg-gray-100'} border-2 border-blue-200 border-dashed rounded-xl`}
         onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
         onDragOver={allowDrop}
         onDrop={handleDrop}
       >
