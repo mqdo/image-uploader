@@ -12,6 +12,7 @@ const App = () => {
   const [imgSrc, setImageSrc] = useState('');
 
   const handlePostImage = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append('image', image);
@@ -48,7 +49,6 @@ const App = () => {
 
   useEffect(() => {
     if (image !== '') {
-      setLoading(true);
       handlePostImage();
     }
   }, [image]);
@@ -67,7 +67,7 @@ const App = () => {
       return <Error handleReset={handleReset} />
     }
     if (loading) {
-      return <Loading handleSearchImage={handleSearchImage} />
+      return <Loading />
     }
     return <Uploader setImage={setImage} />
   }
