@@ -85,6 +85,6 @@ app.post('/', upload.single('image'), (req, res) => {
     });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log('listening on port ' + process.env.PORT);
+app.listen(process.env.PORT || 3000, () => {
+  console.log('listening on port ' + process.env.PORT || 3000);
 });
