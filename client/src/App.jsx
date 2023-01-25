@@ -19,18 +19,21 @@ const App = () => {
       setId(res.data._id);
     } catch (err) {
       console.error(err);
+      setLoading(false);
       setError(true);
     }
   }
 
   const handleSearchImage = async () => {
-    if (!id) return;
+    if (id === '') return;
     try {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/images/${id}`);
       setImageSrc(res.data.src);
+      setLoading(false);
       setSuccess(true);
     } catch (err) {
       console.error(err);
+      setLoading(false);
       setError(true);
     }
   }
