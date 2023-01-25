@@ -7,7 +7,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
   const [id, setId] = useState('');
   const [imgSrc, setImageSrc] = useState('');
 
@@ -25,7 +25,6 @@ const App = () => {
   }
 
   const handleSearchImage = async () => {
-    if (id === '') return;
     try {
       const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/images/${id}`);
       setImageSrc(res.data.src);
@@ -42,17 +41,23 @@ const App = () => {
     setLoading(false);
     setSuccess(false);
     setError(false);
-    setImage(null);
+    setImage('');
     setId('');
     setImageSrc('');
   }
 
   useEffect(() => {
-    if (image) {
+    if (image !== '') {
       setLoading(true);
       handlePostImage();
     }
   }, [image]);
+
+  useEffect(() => {
+    if (id !== '') {
+      handleSearchImage();
+    }
+  }, [id]);
 
   const Container = ({ setImage, imgSrc, id }) => {
     if (success) {
