@@ -28,7 +28,19 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
+      return callback(new Error('Only images are allowed'));
+    }
+    callback(null, true);
+  },
+  limits: {
+    fileSize: 2000 * 2000,
+  },
+});
 
 app.use(cors());
 
@@ -37,7 +49,13 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'images')));
 
 app.get('/', (req, res) => {
-  res.json({ greeting: 'Welcome to Image Uploader!' });
+  res.json({
+    greeting: 'Welcome to Image Uploader!',
+    endpoints: {
+      '/images/:id': 'get base64 image source',
+      '/download/:id': 'get image file (downloadable)',
+    },
+  });
 });
 
 app.get('/images/:id', async (req, res) => {
